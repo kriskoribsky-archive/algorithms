@@ -1,0 +1,86 @@
+#https://www.hackerrank.com/challenges/the-time-in-words/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'timeInWords' function below.
+#
+# The function is expected to return a STRING.
+# The function accepts following parameters:
+#  1. INTEGER h
+#  2. INTEGER m
+#
+
+def timeInWords(h, m):
+    # Write your code here
+    
+    time_values = {
+        1: "one",
+        2: "two",
+        3: "three",
+        4: "four",
+        5: "five",
+        6: "six",
+        7: "seven",
+        8: "eight",
+        9: "nine",
+        10: "ten",
+        11: "eleven",
+        12: "twelve",
+        13: "thirteen",
+        14: "fourteen",
+        15: "fiveteen",
+        16: "sixteen",
+        17: "seventeen",
+        18: "eighteen",
+        19: "nineteen",
+        20: "twenty",
+    }
+    
+    if m == 0:
+        return f"{time_values.get(h)} o' clock"
+    elif m == 15:
+        return f"quarter past {time_values.get(h)}"
+    elif m == 30:
+        return f"half past {time_values.get(h)}"
+    elif m == 45:
+        return f"quarter to {time_values.get(h+1)}"
+    
+    elif m < 30:
+        if m == 1:
+            return f"one minute past {time_values.get(h)}"
+        elif m <= 20:
+            return f"{time_values.get(m)} minutes past {time_values.get(h)}"
+        else:
+            
+            return f"{time_values.get(20)} {time_values.get(m - 20)} minutes past {time_values.get(h)}"
+    else:
+        diff = 60 - m
+        
+        if diff == 1:
+            return f"one minute to {time_values.get(h+1)}"
+        elif diff <= 20:
+            return f"{time_values.get(diff)} minutes to {time_values.get(h+1)}"
+        else:
+            return f"{time_values.get(20)} {time_values.get(diff - 20)} minutes to {time_values.get(h+1)}"
+    
+
+        
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    h = int(input().strip())
+
+    m = int(input().strip())
+
+    result = timeInWords(h, m)
+
+    fptr.write(result + '\n')
+
+    fptr.close()

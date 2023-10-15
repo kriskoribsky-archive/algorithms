@@ -1,0 +1,148 @@
+#https://www.hackerrank.com/challenges/matrix-rotation-algo/problem?isFullScreen=true
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'matrixRotation' function below.
+#
+# The function accepts following parameters:
+#  1. 2D_INTEGER_ARRAY matrix
+#  2. INTEGER r
+#
+
+def matrixRotation(matrix, r):
+    # Write your code here
+    
+    # 1. disassemble matrix layer by layer
+    # 2. rotate layers separately r number of times
+    # 3. assemble and return matrix
+
+    rows = m
+    cols = n
+    
+    layers = int(min(rows, cols)/2)
+    
+    new_matrix = [[] for i in range(rows)]
+    
+    # start from outermost layer
+    for i in range(0, layers):
+        
+        layer = []
+        
+        # layer_rows = len(matrix)
+        layer_cols = len(matrix[0]) 
+        
+        
+        # asceding / descending order (index order)
+        # alternative to += is function .extend()
+            
+        # top row (asceding)
+        layer += matrix[0]
+        del matrix[0]
+        
+        # right col (ascending)        
+        for j in range(len(matrix)-1):
+            # last character
+            layer.append(matrix[j][-1])
+            del matrix[j][-1]
+        
+        # bottom row (descending)
+        layer += matrix[-1][::-1]
+        del matrix[-1]
+        
+        # left col (descending)
+        for j in range(len(matrix)-1, -1, -1):
+            layer.append(matrix[j][0])
+            del matrix[j][0]
+            
+
+            
+            
+        # rotate layer r times
+        layer = layer[r%len(layer):] + layer[:r%len(layer)]
+        
+        # print(f"{i}. layer: {layer}")
+        
+        # assemble back to new matrix
+        
+        # top row (ascending)
+        new_matrix[i] = [*new_matrix[i][:i], *layer[:layer_cols], *new_matrix[i][i:]]
+        del layer[:layer_cols]
+        
+        # print(f"{i}. layer after top row: {layer}")
+            
+        # right col (ascending)
+        for j in range(i+1, rows-i-1):
+            new_matrix[j].insert(-i, layer[0])
+            del layer[0]
+            
+        # print(f"{i}. layer after right col: {layer}")
+            
+        # bottom row (descending)
+        new_matrix[rows-i-1] = [*new_matrix[rows-i-1][:i], *layer[:layer_cols][::-1],
+                                *new_matrix[rows-i-1][i:]]
+        del layer[:layer_cols]   
+        
+        # print(f"{i}. layer after bottom row: {layer}")
+        
+        # print(f"i = {i}, -> in range({rows-i-2}, {i}, -1)")
+        # left col (descending)
+        for j in range(rows-i-2, i, -1):
+            # print("j=", j)
+            new_matrix[j].insert(i, layer[0])
+            del layer[0]
+
+        # print(f"{i}. layer after left col: {layer}")
+        
+        
+        
+        
+        
+        
+        
+        # print(f"{i}. layer: {layer}")
+        
+        # print(f"\nold matrix after {i}. layer:")
+        
+        # for row in matrix:
+        #     print(" ".join(list(map(str, row))))
+        
+        # print(f"\nnew matrix after {i}. layer and {r} rotations:")
+        
+        # for row in new_matrix:
+        #     print(" ".join(list(map(str, row))))
+        
+        
+        
+    # print(f"\nnew matrix after {r} rotations:")
+        
+    for row in new_matrix:
+        print(" ".join(list(map(str, row))))
+        
+        
+    
+    return
+    
+    
+
+if __name__ == '__main__':
+    first_multiple_input = input().rstrip().split()
+
+    m = int(first_multiple_input[0])
+
+    n = int(first_multiple_input[1])
+
+    r = int(first_multiple_input[2])
+
+    matrix = []
+
+    for _ in range(m):
+        matrix.append(list(map(int, input().rstrip().split())))
+
+    matrixRotation(matrix, r)

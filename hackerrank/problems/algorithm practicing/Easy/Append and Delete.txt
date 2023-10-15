@@ -1,0 +1,62 @@
+#https://www.hackerrank.com/challenges/append-and-delete/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'appendAndDelete' function below.
+#
+# The function is expected to return a STRING.
+# The function accepts following parameters:
+#  1. STRING s
+#  2. STRING t
+#  3. INTEGER k
+#
+
+def appendAndDelete(s, t, k):
+    # Write your code here
+    
+    matching = 0
+    
+    # find mutual matching parts of strings s, t
+    for char1, char2 in zip(s, t):
+        if char1 == char2:
+            matching += 1
+        else:
+            break
+            
+    # calculate minimum operations required for transformation
+    minimum_operations = (len(s) - matching) + (len(t) - matching) 
+    
+    if k == minimum_operations:
+        return "Yes"
+    # in case empty strings can be deleted within our cost (k)
+    elif k - minimum_operations > matching*2 and minimum_operations < k:
+        return "Yes"
+    # if empty strings can't be deleted, we can "waste" operations by increments of 2
+    elif minimum_operations % 2 == k % 2 and minimum_operations < k:
+        return "Yes"
+    else:
+        return "No"
+    
+        
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    s = input()
+
+    t = input()
+
+    k = int(input().strip())
+
+    result = appendAndDelete(s, t, k)
+
+    fptr.write(result + '\n')
+
+    fptr.close()

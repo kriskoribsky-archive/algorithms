@@ -1,0 +1,101 @@
+#https://www.hackerrank.com/challenges/3d-surface-area/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'surfaceArea' function below.
+#
+# The function is expected to return an INTEGER.
+# The function accepts 2D_INTEGER_ARRAY A as parameter.
+#
+
+def get_max_indexes(array):
+    
+    maximum = max(array)
+    indexes = []
+    
+    for i in range(len(array)):
+        if array[i] == maximum:
+            indexes.append(i)
+            
+    return indexes
+            
+
+
+def surfaceArea(A):
+    # Write your code here
+    
+    """
+    surface area of the 3d cube = 6*a*a where a is the length of a square side
+    but our object isn't necessarily a cube
+    surface area of any 3d object consists of 6 faces
+    we can calculate surface area of an irregular cuboid object by calculating each
+    face individualy and summing them
+    """
+    
+    print("default board:", A)
+    print("dimensions:", H, W)
+    
+    width_face = [x for x in zip(*A)]
+    height_face = A
+    
+    length_surface = H*W
+    width_surface = 0
+    height_surface = 0
+
+    
+    #width
+    for col in width_face:
+        
+        col_surface = max(col)
+        indexes = get_max_indexes(col)
+            
+        for index1, index2 in zip(indexes[0::2], indexes[1::2]):
+            col_surface += max(col) - min(col[index1:index2])
+        
+        width_surface += col_surface
+            
+    #height
+    for row in height_face:
+        
+        row_surface = max(row)
+        indexes = get_max_indexes(row)
+        
+        for index1, index2 in zip(indexes[0::2], indexes[1::2]):
+            row_surface += max(row) - min(row[index1:index2])
+        
+        height_surface += row_surface
+        
+      
+    print("width face:", width_face)
+    print("height face:", height_face)
+    
+    return 2*(length_surface + height_surface + width_surface)
+
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    first_multiple_input = input().rstrip().split()
+
+    H = int(first_multiple_input[0])
+
+    W = int(first_multiple_input[1])
+
+    A = []
+
+    for _ in range(H):
+        A.append(list(map(int, input().rstrip().split())))
+
+    result = surfaceArea(A)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()

@@ -1,0 +1,72 @@
+#https://www.hackerrank.com/challenges/non-divisible-subset/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'nonDivisibleSubset' function below.
+#
+# The function is expected to return an INTEGER.
+# The function accepts following parameters:
+#  1. INTEGER k
+#  2. INTEGER_ARRAY s
+#
+
+def nonDivisibleSubset(k, s):
+    # Write your code here
+    
+    # main logic behind this is if:
+    # (a+b)%K=0(means evenly divisible) then (a%k+b%K=K)
+    
+    # however, there are 2 exceptions (described below)
+    
+    # count all possible remainders of division by k,
+    # numbers divisible by k without remainder will be stored in index 0
+    counts = [0]*k
+    
+    for number in s:
+        counts[number%k] += 1
+    
+    # FIRST EXCEPTION
+    # there can be at most 1 number with divison remainder of 0
+    # (if there are 2, the sum of these numbers would be divisible by k)
+    count = min(1, counts[0])
+    
+    # since i + k-i constitute a pair and will be always divisible by k, iterate over           the half of counts
+    # for i in range(1, k//2+1):
+    for i in range(1, len(counts)//2 + 1):
+        # SECOND EXCEPTION
+        # similiar to division remainder of 0, if the k is even,
+        # the remainder on the k/2 position (in the centre) in the counts list
+        # can be of value at most 1 because the sum of 2 those numbers would 
+        # result again in a number evenly divisible by k
+        if k % 2 == 0 and i == k/2:
+            count += min(1, counts[i])
+        else:
+            count += max(counts[i], counts[k-i])
+            
+    return count
+
+    
+    
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    first_multiple_input = input().rstrip().split()
+
+    n = int(first_multiple_input[0])
+
+    k = int(first_multiple_input[1])
+
+    s = list(map(int, input().rstrip().split()))
+
+    result = nonDivisibleSubset(k, s)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()

@@ -1,0 +1,50 @@
+#https://www.hackerrank.com/challenges/save-the-prisoner/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the saveThePrisoner function below.
+def saveThePrisoner(n, m, s):
+    
+    #index of a starting chair number
+    start = s - 1
+    
+    #the number of candys which need to be passed to each prisoner
+    candy = m 
+    
+    if n < m:
+        candy = m - int(m/n)*n
+    
+    if candy+start == 0:
+        return(n)
+    elif candy+start <= n:
+        #print(candy+start)
+        return(candy+start)
+    else:
+        #print((start-n)+candy)
+        return((start-n)+candy)
+    
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    t = int(input())
+
+    for t_itr in range(t):
+        nms = input().split()
+
+        n = int(nms[0])
+
+        m = int(nms[1])
+
+        s = int(nms[2])
+
+        result = saveThePrisoner(n, m, s)
+
+        fptr.write(str(result) + '\n')
+
+    fptr.close()

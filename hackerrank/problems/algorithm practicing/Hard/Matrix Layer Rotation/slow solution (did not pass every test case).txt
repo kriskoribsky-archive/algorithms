@@ -1,0 +1,117 @@
+#https://www.hackerrank.com/challenges/matrix-rotation-algo/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'matrixRotation' function below.
+#
+# The function accepts following parameters:
+#  1. 2D_INTEGER_ARRAY matrix
+#  2. INTEGER r
+#
+
+def matrixRotation(matrix, r):
+    # Write your code here
+  
+    def rotate_once(matrix, rows, cols):
+        
+        layers = int(min(rows, cols)/2)
+        
+        new_matrix = [[] for i in range(rows)]
+        
+        # max indexes
+        rows_i = rows - 1
+        cols_i = cols - 1
+        
+        # starting from innermost layer
+        for i in range(layers-1, -1, -1):
+            # starting at the second last character in the top row of current layer
+            j, k = i, cols_i - i
+            k -= 1 
+            
+            
+            
+            # top row
+            while k > i:                
+                new_matrix[j].insert(0, matrix[j][k+1])
+                k -= 1
+                
+            new_matrix[j].insert(0, matrix[j][k+1])
+            
+            
+            
+            # left col
+            j += 1
+            while j < rows_i - i:
+                new_matrix[j].insert(0, matrix[j-1][k])
+                j += 1
+                
+            new_matrix[j].insert(0, matrix[j-1][k])
+                
+            
+            
+            # bottom row            
+            k += 1
+            while k < cols_i - i:
+                new_matrix[j].insert(k, matrix[j][k-1])
+                k += 1
+            
+            new_matrix[j].insert(k, matrix[j][k-1])
+            
+            
+            
+            # right col
+            j -= 1
+            while j > i:
+                new_matrix[j].insert(k, matrix[j+1][k])
+                j -= 1
+                
+            new_matrix[j].insert(k, matrix[j+1][k])
+            
+            # print(f"{i} layer: ")
+            # for row in new_matrix:
+            #     output = list(map(str, row))
+            #     print(" ".join(output))
+            
+            
+        return new_matrix
+                   
+    for _ in range(r):
+        matrix = rotate_once(matrix, m, n)  
+        
+    # print("\nfinal:\n")    
+    
+    for row in matrix:
+        output = list(map(str, row))
+        print(" ".join(output))
+                
+    return
+                
+                
+                
+                
+    
+    
+    
+
+if __name__ == '__main__':
+    first_multiple_input = input().rstrip().split()
+
+    m = int(first_multiple_input[0])
+
+    n = int(first_multiple_input[1])
+
+    r = int(first_multiple_input[2])
+
+    matrix = []
+
+    for _ in range(m):
+        matrix.append(list(map(int, input().rstrip().split())))
+
+    matrixRotation(matrix, r)

@@ -1,0 +1,47 @@
+#https://www.hackerrank.com/challenges/the-birthday-bar/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the birthday function below.
+def birthday(s, d, m):
+
+    ways_count = 0
+    days = 0
+
+    while len(s)>=m:
+        for x in range(m):
+            days += s[x]           
+
+        if days == d:
+            ways_count += 1  
+            
+        days = 0
+        s.pop(0)
+        
+
+    return ways_count
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    n = int(input().strip())
+
+    s = list(map(int, input().rstrip().split()))
+
+    dm = input().rstrip().split()
+
+    d = int(dm[0])
+
+    m = int(dm[1])
+
+    result = birthday(s, d, m)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()

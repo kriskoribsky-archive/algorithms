@@ -1,0 +1,48 @@
+#https://www.hackerrank.com/challenges/utopian-tree/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+from decimal import Decimal, ROUND_HALF_UP
+
+# Complete the utopianTree function below.
+
+def normal_round(n):
+    
+    if n - math.floor(n) < 0.5:
+        return math.floor(n)
+    
+    return math.ceil(n)
+    
+def utopianTree(n):
+    
+    tree_height = 1
+    
+    growth_cycles = normal_round(n/2)
+    
+    for x in range(growth_cycles):
+        tree_height *= 2
+        tree_height += 1
+        
+    if (tree_height > 1) and (n % 2 != 0):
+        return(tree_height-1)
+    else:
+        return(tree_height)
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    t = int(input())
+
+    for t_itr in range(t):
+        n = int(input())
+
+        result = utopianTree(n)
+
+        fptr.write(str(result) + '\n')
+
+    fptr.close()

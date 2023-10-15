@@ -1,0 +1,60 @@
+#https://www.hackerrank.com/challenges/larrys-array/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'larrysArray' function below.
+#
+# The function is expected to return a STRING.
+# The function accepts INTEGER_ARRAY A as parameter.
+#
+
+def rotate(sequence):
+    return sequence[1:] + sequence[:1]
+
+def larrysArray(A):
+    # Write your code here
+    
+    a = A
+    
+    for i in range(len(a)):
+        number = i + 1
+        while a.index(number) != i:
+            pos = a.index(number)
+            
+            if pos - 2 >= i:
+                a[pos - 2: pos+1] = rotate(a[pos - 2: pos+1])
+            elif pos - 1 >= i and pos + 1 < len(a):
+                a[pos - 1: pos+2] = rotate(a[pos - 1: pos+2])
+            elif pos + 2 < len(a):
+                a[pos: pos+3] = rotate(a[pos: pos+3])
+            else:
+                return "NO"
+            
+    return "YES"
+    
+    
+    
+    
+    
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    t = int(input().strip())
+
+    for t_itr in range(t):
+        n = int(input().strip())
+
+        A = list(map(int, input().rstrip().split()))
+
+        result = larrysArray(A)
+
+        fptr.write(result + '\n')
+
+    fptr.close()

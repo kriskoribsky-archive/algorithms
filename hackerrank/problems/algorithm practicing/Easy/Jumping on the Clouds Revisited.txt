@@ -1,0 +1,51 @@
+#https://www.hackerrank.com/challenges/jumping-on-the-clouds-revisited/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the jumpingOnClouds function below.
+def jumpingOnClouds(c, k):
+    
+    energy = 100
+    energy_spent = 0
+    
+    if n % k == 0:
+        for x in range(0, n, k):
+            if c[x] == 0:
+                energy_spent += 1
+            else:
+                energy_spent += 3
+                
+    else:
+        c += k%n * c
+        print(c)
+        for x in range(0, (k%n*n), k):
+            if c[x] == 0:
+                energy_spent += 1
+            else:
+                energy_spent += 3
+    
+    return(energy-energy_spent)
+        
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    nk = input().split()
+
+    n = int(nk[0])
+
+    k = int(nk[1])
+
+    c = list(map(int, input().rstrip().split()))
+
+    result = jumpingOnClouds(c, k)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()

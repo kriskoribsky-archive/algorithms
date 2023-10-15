@@ -1,0 +1,39 @@
+#https://www.hackerrank.com/challenges/permutation-equation/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the permutationEquation function below.
+def permutationEquation(p):
+
+    y = []
+    
+    for x in range(1, n+1):
+        
+        #index of searched number
+        index = p.index(x)+1
+        
+        #find and add to a list index of index of searched number
+        y.append(p.index(index)+1)
+        
+    return y
+        
+    
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    n = int(input())
+
+    p = list(map(int, input().rstrip().split()))
+
+    result = permutationEquation(p)
+
+    fptr.write('\n'.join(map(str, result)))
+    fptr.write('\n')
+
+    fptr.close()

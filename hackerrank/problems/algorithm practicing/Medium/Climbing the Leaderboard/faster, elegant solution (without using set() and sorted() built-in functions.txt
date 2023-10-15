@@ -1,0 +1,70 @@
+# https://www.hackerrank.com/challenges/climbing-the-leaderboard/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'climbingLeaderboard' function below.
+#
+# The function is expected to return an INTEGER_ARRAY.
+# The function accepts following parameters:
+#  1. INTEGER_ARRAY ranked
+#  2. INTEGER_ARRAY player
+#
+
+def climbingLeaderboard(ranked, player):
+    # Write your code here
+    
+    # remove duplicates
+    # ranked = sorted(set(ranked), reverse=True)
+    
+    # remove duplicates without using sorted and set built in functions
+    set_ranked = []
+    
+    for i in range(len(ranked)-1):
+        if ranked[i] != ranked[i+1]:
+            set_ranked.append(ranked[i])
+    
+    # append last missing element
+    set_ranked.append(ranked[-1])
+
+    for score in player:
+        
+        # iterate throught ranked from the end
+        while set_ranked:
+            if set_ranked[-1] > score:
+                # yield (return) last rank of the scoreboard
+                yield len(set_ranked) + 1
+                break
+            
+            # remove last element from ranked as it is less than current score
+            else:
+                set_ranked.pop(-1)
+                
+        # in case score is greater than every score in ranked -> current game score is 1st in the                  # scoreboard
+        else:
+            yield 1
+    
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    ranked_count = int(input().strip())
+
+    ranked = list(map(int, input().rstrip().split()))
+
+    player_count = int(input().strip())
+
+    player = list(map(int, input().rstrip().split()))
+
+    result = climbingLeaderboard(ranked, player)
+
+    fptr.write('\n'.join(map(str, result)))
+    fptr.write('\n')
+
+    fptr.close()

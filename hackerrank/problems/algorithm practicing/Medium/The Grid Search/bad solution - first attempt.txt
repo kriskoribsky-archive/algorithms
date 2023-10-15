@@ -1,0 +1,92 @@
+# https://www.hackerrank.com/challenges/the-grid-search/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'gridSearch' function below.
+#
+# The function is expected to return a STRING.
+# The function accepts following parameters:
+#  1. STRING_ARRAY G
+#  2. STRING_ARRAY P
+#
+
+def gridSearch(G, P):
+    # Write your code here
+    
+    for row_number, row in enumerate(G):
+        if P[0] in row:
+            matching_index = row.find(P[0])
+            
+            i = row_number + 1
+            
+            passed = True
+        
+            # iterate through rest of P, in the rest of G
+            for pattern_row in P[1:]:
+                if G[i].find(pattern_row) == matching_index:
+                    i += 1
+                else:
+                    passed = False
+                    break
+            
+            if passed:
+                print("YES")
+                return "YES"
+    
+    print("NO")
+    return "NO"
+                
+                
+                
+            
+                        
+        
+    
+    
+    
+    
+    
+    
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    t = int(input().strip())
+
+    for t_itr in range(t):
+        first_multiple_input = input().rstrip().split()
+
+        R = int(first_multiple_input[0])
+
+        C = int(first_multiple_input[1])
+
+        G = []
+
+        for _ in range(R):
+            G_item = input()
+            G.append(G_item)
+
+        second_multiple_input = input().rstrip().split()
+
+        r = int(second_multiple_input[0])
+
+        c = int(second_multiple_input[1])
+
+        P = []
+
+        for _ in range(r):
+            P_item = input()
+            P.append(P_item)
+
+        result = gridSearch(G, P)
+
+        fptr.write(result + '\n')
+
+    fptr.close()

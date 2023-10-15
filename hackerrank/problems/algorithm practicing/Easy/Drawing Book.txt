@@ -1,0 +1,44 @@
+#https://www.hackerrank.com/challenges/drawing-book/problem
+
+#!/bin/python3
+
+import os
+import sys
+
+#
+# Complete the pageCount function below.
+#
+def pageCount(n, p):
+    #
+    # Write your code here.
+    #
+
+    pages = []
+
+    for x in range(0, n+1, 2):
+        if x == n:
+            pages.append([n])
+        else:
+            pages.append([x, x+1])
+
+    for y in pages:
+        if p in y:
+            page_p = pages.index(y) + 1
+    
+    if page_p > len(pages)/2:
+        return int(len(pages) - page_p)
+    else:
+        return page_p-1
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    n = int(input())
+
+    p = int(input())
+
+    result = pageCount(n, p)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()

@@ -1,0 +1,57 @@
+#https://www.hackerrank.com/challenges/electronics-shop/problem
+
+#another good solution: https://github.com/RyanFehr/HackerRank/blob/master/Algorithms/Implementation/Electronics%20Shop/Solution.java
+
+#!/bin/python3
+
+import os
+import sys
+
+#
+# Complete the getMoneySpent function below.
+#
+def getMoneySpent(keyboards, drives, b):
+    #
+    # Write your code here.
+    #
+
+    prices_list = []
+
+    if min(keyboards) + min(drives) > b:
+        return ("-1")
+
+    for x in range (n):
+        for y in (drives):
+            if keyboards[x]+y <= b:
+                prices_list.append(keyboards[x]+y)
+
+            if keyboards[x]+y == b:
+                return(keyboards[x]+y)
+
+    print(prices_list)
+    return(max(prices_list))
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    bnm = input().split()
+
+    b = int(bnm[0])
+
+    n = int(bnm[1])
+
+    m = int(bnm[2])
+
+    keyboards = list(map(int, input().rstrip().split()))
+
+    drives = list(map(int, input().rstrip().split()))
+
+    #
+    # The maximum amount of money she can spend on a keyboard and USB drive, or -1 if she can't purchase both items
+    #
+
+    moneySpent = getMoneySpent(keyboards, drives, b)
+
+    fptr.write(str(moneySpent) + '\n')
+
+    fptr.close()
